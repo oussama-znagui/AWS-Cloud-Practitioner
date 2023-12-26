@@ -3,6 +3,8 @@
 include 'user.php';
 
 
+
+
 class Game
 {
     private $id_game;
@@ -26,6 +28,16 @@ class Game
     {
         $this->$prop = $value;
     }
+
+    public function newGame()
+    {
+        $sql = db::connexion()->prepare("INSERT into game values(:id,:score,:idUser)");
+        $sql->bindParam(":id", $this->id_game);
+        $sql->bindParam(":score", $this->score);
+        $idUser = $this->user->__get("id_user");
+        $sql->bindParam(":idUser", $idUser);
+        $sql->execute();
+    }
 }
-// $test = new Game(null, 0, 1, 'oussama');
-// echo $test->user->__get('name');
+// $game = new Game(NULL, 0, 1, "oussama");
+// $game->newGame();
