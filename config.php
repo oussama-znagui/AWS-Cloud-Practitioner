@@ -1,5 +1,7 @@
 <?php
 define("host","localhost");
-define("user","")
+define("user","root");
+define("pass","");
+define("db","aws");
 
 ?>
