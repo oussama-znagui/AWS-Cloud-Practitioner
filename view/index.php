@@ -14,7 +14,7 @@
             <img class="w-1/5 m-auto" src="../media/logo.png" alt="">
             <h1 class="text-center w-3/4mb-4 text-3xl font-extrabold leading-none tracking-tight text-white md:text-4xl lg:text-5xl">"Quiz AWS : Testez Vos Connaissances sur Amazon Web Services"</h1>
             <p class="text-white text-center w-3/4 m-5 text-sm">Bienvenue sur Quiz AWS, votre destination pour tester et améliorer vos connaissances sur Amazon Web Services (AWS). Que vous soyez un débutant cherchant à explorer le cloud computing ou un professionnel AWS chevronné</p>
-            <form action="" class="w-3/5">
+            <form action="../controller/user.php" methode="post" class="w-3/5">
                 <div class="flex w-full">
                 <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 rounded-s-md  ">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
