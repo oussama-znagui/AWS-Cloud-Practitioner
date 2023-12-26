@@ -22,11 +22,11 @@ class User{
         $sql->bindParam(":name",$this->name);
         $sql->execute();
         if($sql->rowCount() > 0){
-            echo 'kaayn';
+           
             return false;
         }
         else {
-            echo 'makaayn';
+        
             return true;
         }
     }

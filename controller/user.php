@@ -11,6 +11,7 @@ if($user->chekUser()){
     header("Location: quiz.php");
 }
 else{
+    
     $_SESSION['username'] = $user->__get("name");
     header("Location: ../view/quiz.php");
 }
