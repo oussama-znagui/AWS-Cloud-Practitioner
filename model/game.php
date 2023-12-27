@@ -37,7 +37,26 @@ class Game
         $idUser = $this->user->__get("id_user");
         $sql->bindParam(":idUser", $idUser);
         $sql->execute();
+
+
+
+
+
+
+        // $this->id_game = $idGame;
+    }
+
+    public  function selectLastGame()
+    {
+        $a = $this->user->id_user;
+        $sql = db::connexion()->query("SELECT * FROM `game` WHERE id_user = $a  ORDER BY id_game DESC LIMIT 1");
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        $this->id_game = $result[0]['id_game'];
     }
 }
-// $game = new Game(NULL, 0, 1, "oussama");
+// $game = new Game(NULL, 12222, 1, "oussama");
 // $game->newGame();
+// print_r($game);
+// print_r($game->selectLastGame());
+// print_r($game);

@@ -41,6 +41,18 @@ class Question
 
         return $arrayQuestion;
     }
+    public function getQuestion()
+    {
+        $idQ = $this->idQ['id_question'];
+
+        $sql = db::connexion()->query("SELECT * FROM question join theme where question.id_theme = theme.id_theme AND  id_question = $idQ ");
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        $this->idQ = $result[0]['id_question'];
+        $this->question = $result[0]['question'];
+        $this->theme->idTheme = $result[0]['id_theme'];
+        $this->theme->theme = $result[0]['theme'];
+    }
 }
 
 $a = Question::GetAllQuestion();

@@ -17,27 +17,27 @@ if (empty($_POST['username'])) {
         // header("Location: quiz.php");
     } else {
         $user = $user->selectUser();
-        // print_r($user);
         $game = new Game(NULL, 0, $user->__get("id_user"), $user->__get("name"));
         $game->newGame();
-        // $question = new Question();
+        $game->selectLastGame();
+        // print_r($game);
+
 
         $questions = Question::GetAllQuestion();
         shuffle($questions);
-        // print_r($questions);
+
         foreach ($questions as $question) {
             $gameQuestion = new gameQuestion(null, $game, $question, null);
-            
+            $gameQuestion->addGameQuestion();
         }
 
-
-        
-
-        // print_r($gameQuestion);
-
-
-
+        session_start();
         $_SESSION['username'] = $user->__get("name");
-        // header("Location: ../view/quiz.php");
+        $_SESSION['game'] = $game->__get("id_game");
+        $_SESSION['question'] = $gameQuestion->getQuestions();
+        $_SESSION['quiz'] = 0;
+
+
+        header("Location: ../view/quiz.php");
     }
 }
