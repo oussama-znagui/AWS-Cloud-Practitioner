@@ -36,6 +36,10 @@ if (empty($_POST['username'])) {
         $_SESSION['game'] = $game->__get("id_game");
         $_SESSION['question'] = $gameQuestion->getQuestions();
         $_SESSION['quiz'] = 0;
+        $_SESSION['score'] = 0;
+        $_SESSION['button'] = "Suivant";
+        
+
 
 
         header("Location: ../view/quiz.php");

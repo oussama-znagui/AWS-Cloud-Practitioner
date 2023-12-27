@@ -1,16 +1,20 @@
 <?php
 session_start();
 include '../connexion.php';
+
 include '../model/gameQuestion.php';
+include '../model/answer.php';
 if ($_SESSION['username'] = "") {
     header('location: index.php');
 } else {
 
     // print_r($_SESSION);
+    echo $_SESSION["quiz"];
     $idQ = $_SESSION['question'][$_SESSION["quiz"]];
     $question = new Question();
     $question->__set("idQ", $idQ);
     $question->getQuestion();
+    $Answers = Answer::getAnswer($question);
 }
 ?>
 
@@ -40,54 +44,64 @@ if ($_SESSION['username'] = "") {
                 <h1 class="text-center  m-auto  text-lg font-extrabold leading-none tracking-tight  md:text-xl lg:text-2xl"><?php echo $question->__get('question')  ?>
                 </h1>
             </div>
-            <div class="flex  m-auto my-5">
-                <div class="w-2/4">
-                    <div class="m-5 bg-slate-200 p-5 rounded-3xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <?php
+                $lettre = "A";
+                foreach ($Answers as $Answer) {
+                    // print_r($Answer);
+
+
+                ?>
+                    <div class="h-24 m-5 bg-slate-200 p-5 rounded-3xl">
 
                         <h2 class="text-center w-3/4 m-auto  text-xs font-bold leading-none tracking-tight text-black md:text-xl lg:text-sm  ">
-                            A/ <span>Amazon EC2 costs are billed on a monthly basis.</span>
+                            <?php echo $lettre ?> /<span><?php echo $Answer->__get('answer') ?></span>
                         </h2>
 
                     </div>
-                    <div class="m-5 bg-slate-200 p-5 rounded-3xl">
 
-                        <h2 class="text-center w-3/4 m-auto  text-xs font-bold leading-none tracking-tight text-black md:text-xl lg:text-sm  ">
-                            B/ <span>Amazon EC2 costs are billed on a monthly basis.</span>
-                        </h2>
-
-                    </div>
-                </div>
-                <div class="w-2/4">
-                    <div class="m-5 bg-slate-200 p-5 rounded-3xl">
-
-                        <h2 class="text-center w-3/4 m-auto  text-xs font-bold leading-none tracking-tight text-black md:text-xl lg:text-sm  ">
-                            C/ <span>Amazon EC2 costs are billed on a monthly basis.</span>
-                        </h2>
-
-                    </div>
-                    <div class="m-5 bg-slate-200 p-5 rounded-3xl">
-
-                        <h2 class="text-center w-3/4 m-auto  text-xs font-bold leading-none tracking-tight text-black md:text-xl lg:text-sm  ">
-                            D/ <span>Amazon EC2 costs are billed on a monthly basis.</span>
-                        </h2>
-
-                    </div>
-                </div>
-
+                <?php
+                    $lettre++;
+                }
+                ?>
 
             </div>
+
             <div class="flex justify-between items-center ">
-                <div></div>
+                <div>
+                    <?php
+                    if (@$_GET['error']) {
+
+                    ?>
+                        <div class=' bg-red-600 flex justify-center items-center p-5 rounded-xl'>
+                            <h2 class='text-sm font-medium text-gray-100'>
+                                &#x26A0; s'il vous plait veuillez selectionner labonne reponse
+                            </h2>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
                 <form action="./../controller/quiz.php" method="post" class="bg-green-500 rounded-xl p-5 ">
-                    <label for="" class=" mb-2 text-sm font-medium text-gray-100">Selectionez la bonne reponse</label>
-                    <select name="" id="" class="  p-2  text-sm text-gray-900 border border-gray-300 rounded-lg ">
+
+
+                    <label for="" class="  text-sm font-medium text-gray-100">Selectionez la bonne reponse</label>
+                    <select name="correction" id="" class="  p-2  text-sm text-gray-900 border border-gray-300 rounded-lg ">
                         <option value="">--</option>
-                        <option value="">A</option>
-                        <option value="">B</option>
-                        <option value="">C</option>
-                        <option value="">D</option>
+                        <?php
+                        $lettre = 'A';
+                        foreach ($Answers as $Answer) {
+                            // print_r($Answer);
+                        ?>
+                            <option value="<?php echo $Answer->correction; ?>"><?php echo $lettre ?></option>
+                        <?php
+                            $lettre++;
+                        }
+                        ?>
                     </select>
-                    <input type="submit" name="go" value="Suivant" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5  ">
+
+                    <input type="submit" name="go" value="<?php echo $_SESSION['button'] ?>" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5  ">
                 </form>
 
             </div>
